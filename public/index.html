@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Car Sharing</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="/index.html">Car Sharing</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="/cars.html">Автомобили</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="/history.html">
+              <i class="bi bi-clock-history me-1"></i>История
+            </a>
+          </li>
+          <li class="nav-item"><a class="nav-link" id="navProfile" href="/profile.html" style="display:none;">Профиль</a></li>
+          
+          <li class="nav-item"><a class="nav-link" id="navLogin" href="/login.html">Войти</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="text-white text-center py-5">
+    <div class="container">
+      <h1>Добро пожаловать в Car Sharing!</h1>
+      <p>Арендуйте автомобиль в любое время и в любом месте.</p>
+    </div>
+  </header>
+
+  <main class="container my-5">
+    <div id="toastContainer" class="toast-container position-fixed top-0 end-0 p-3"></div>
+    <h2 class="text-center">Что мы предлагаем</h2>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Большой выбор автомобилей</h5>
+            <p class="card-text">Выберите автомобиль, который подходит вам.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Доступные цены</h5>
+            <p class="card-text">Арендуйте авто по выгодным ценам.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Удобное бронирование</h5>
+            <p class="card-text">Легко бронируйте авто в несколько кликов.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="text-white bg-dark py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h5>О нас</h5>
+          <p>
+            Car Sharing — это современный сервис по аренде автомобилей. Мы предлагаем
+            удобные и экономичные решения для ваших поездок.
+          </p>
+          <p>Телефон: +7 (707) 123-45-67</p>
+          <p>Email: info@carsharing.kz</p>
+        </div>
+        <div class="col-md-6">
+          <h5>Наш автосалон</h5>
+          <p>Адрес: г. Алматы, ул. Абая, 10</p>
+          <p>Режим работы: Пн-Пт: 9:00 - 18:00, Сб-Вс: 10:00 - 16:00</p>
+          <p>Приезжайте к нам за подробной информацией и личной консультацией!</p>
+        </div>
+      </div>
+      <div class="text-center mt-4">
+        <p>© 2025 Car Sharing. Все права защищены.</p>
+      </div>
+    </div>
+  </footer>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/notifications.js"></script>
+</body>
+</html>

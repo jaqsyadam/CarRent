@@ -1,0 +1,139 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  font-family: Arial, sans-serif;
+}
+main {
+  flex: 1; 
+}
+
+header {
+  background: url('https://www.mercedes-benz.com/content/dam/brandhub/assets/vehicles/mercedes-benz/s-class-wv223/exterior/mercedes-benz-s-class-wv223-exterior-tab-gallery-2560x1120-08-2020.jpg/_jcr_content/renditions/image-crop-default.jpeg/1730302313143.jpg?im=Resize=(1680);Crop,rect=(0,0,1680,735)') no-repeat center center/cover;
+  color: white; /* Цвет текста для контраста */
+  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5); /* Тень для текста, чтобы сделать его более читаемым */
+  height: 300px;
+  display: flex; /* Центрируем содержимое */
+  align-items: center; /* Центрируем по вертикали */
+  justify-content: center; /* Центрируем по горизонтали */
+  padding: 0;
+}
+
+.card {
+  border: none;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  transition: all 0.3s ease-in-out;
+}
+
+.card.bg-light.inactive-card {
+  background-color: #c7d0d8 !important; /* Серый фон для неактивных карточек */
+  color: white !important; /* Белый текст */
+}
+
+.card.bg-light.inactive-card a, 
+.card.bg-light.inactive-card button {
+  color: white !important; /* Белый текст для ссылок и кнопок */
+}
+
+
+.badge {
+  font-size: 0.9rem;
+  padding: 0.4em 0.8em;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  max-width: 90%;
+}
+
+.close {
+  float: right;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Стили для noUiSlider */
+.noUi-target {
+  background: #f8f9fa; /* Цвет фона слайдера */
+  border: 1px solid #dee2e6; /* Границы */
+  border-radius: 8px; /* Скругленные углы */
+  height: 6px; /* Толщина линии слайдера */
+}
+
+.noUi-connect {
+  background: #007bff; /* Цвет заполненной части */
+  height: 6px;
+}
+
+.noUi-handle {
+  width: 12px; /* Ширина кнопки */
+  height: 12px; /* Высота кнопки */
+  border: 2px solid #007bff; /* Границы кнопки */
+  background: #fff; /* Цвет кнопки */
+  border-radius: 50%; /* Круглая кнопка */
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Легкая тень */
+  cursor: pointer; /* Курсор при наведении */
+}
+
+.noUi-horizontal .noUi-handle {
+  top: -3px; /* Центрирование кнопки по вертикали */
+}
+
+.noUi-horizontal .noUi-connect {
+  border-radius: 8px; /* Скругление заполненной части */
+}
+
+select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  appearance: none; /* Убирает стандартную стрелку в некоторых браузерах */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+select option {
+  background-color: white;
+  color: black;
+  padding: 8px;
+}
+
+.form-check-label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-check-input {
+  margin-right: 5px;
+}
+
+
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  bottom:0;
+}

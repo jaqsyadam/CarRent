@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Бронирование автомобиля</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="/index.html">Car Sharing</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="/cars.html">Автомобили</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="/history.html">
+              <i class="bi bi-clock-history me-1"></i>История
+            </a>
+          </li>
+          <li class="nav-item"><a class="nav-link" id="navProfile" href="/profile.html">Профиль</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <main>
+    <div id="toastContainer" class="toast-container position-fixed top-0 end-0 p-3"></div>
+  <div class="container mt-5">
+    <h1 class="text-center">Бронирование автомобиля</h1>
+
+    <!-- Информация о выбранной машине -->
+    <div id="carInfo" class="card my-4 shadow-sm">
+      <div class="card-body">
+        <h5 id="carModel" class="card-title"></h5>
+        <p id="carDetails" class="card-text"></p>
+      </div>
+    </div>
+
+    <!-- Кнопка для открытия модального окна -->
+    <button id="openModalButton" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bookingModal">
+      Выбрать даты
+    </button>
+  </div>
+
+  <!-- Модальное окно -->
+  <div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="bookingModalLabel">Выберите даты</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        </div>
+        <div class="modal-body">
+          <input type="text" id="datePicker" class="form-control" placeholder="Выберите диапазон дат" readonly>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+          <button type="button" id="confirmBookingButton" class="btn btn-primary">Подтвердить бронирование</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </main>
+
+  <footer class="text-white bg-dark py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h5>О нас</h5>
+          <p>
+            Car Sharing — это современный сервис по аренде автомобилей. Мы предлагаем
+            удобные и экономичные решения для ваших поездок.
+          </p>
+          <p>Телефон: +7 (707) 123-45-67</p>
+          <p>Email: info@carsharing.kz</p>
+        </div>
+        <div class="col-md-6">
+          <h5>Наш автосалон</h5>
+          <p>Адрес: г. Алматы, ул. Абая, 10</p>
+          <p>Режим работы: Пн-Пт: 9:00 - 18:00, Сб-Вс: 10:00 - 16:00</p>
+          <p>Приезжайте к нам за подробной информацией и личной консультацией!</p>
+        </div>
+      </div>
+      <div class="text-center mt-4">
+        <p>© 2025 Car Sharing. Все права защищены.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="/js/bookings.js"></script>
+  <script src="/js/notifications.js"></script>
+</body>
+</html>
