@@ -110,7 +110,7 @@ document.getElementById("confirmBookingButton")?.addEventListener("click", async
     if (response.ok) {
       showToast("Бронирование успешно создано!", "success", true);
       localStorage.setItem("toastMessage", JSON.stringify({ message: "Бронирование успешно создано!", type: "success" }));
-      window.location.href = "/history.html";
+      window.location.href = "/history";
     } else {
       showToast(data.message || "Ошибка при создании бронирования.", "danger");
     }
@@ -127,7 +127,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   if (!carId) {
     showToast("Автомобиль не выбран!", "danger");
-    window.location.href = "/cars.html";
+    window.location.href = "/cars";
     return;
   }
 
