@@ -38,7 +38,7 @@ document.getElementById("registerForm")?.addEventListener("submit", async (event
 
     if (response.ok) {
       showToast("Регистрация успешна! Теперь войдите в свой аккаунт.", "success", true);
-      window.location.href = "/login.html"; // Переход на страницу логина
+      window.location.href = "/login"; // Переход на страницу логина
     } else {
       showToast(data.message || "Ошибка регистрации", "danger");
     }
@@ -67,7 +67,7 @@ document.getElementById("loginForm")?.addEventListener("submit", async (event) =
     if (response.ok) {
       localStorage.setItem("emailForOTP", email);
       showToast("Код OTP отправлен. Введите его для входа.", "success", true);
-      window.location.href = "/verify-otp.html"; // Переход на страницу ввода OTP
+      window.location.href = "/verify-otp"; // Переход на страницу ввода OTP
     } else {
       showToast(data.message || "Ошибка авторизации", "danger");
     }
@@ -96,7 +96,7 @@ document.getElementById("otpForm")?.addEventListener("submit", async (event) => 
     if (response.ok) {
       localStorage.setItem("token", data.token);
       showToast("Авторизация успешна!", "success", true);
-      window.location.href = "/profile.html"; // Переход в профиль
+      window.location.href = "/profile"; // Переход в профиль
     } else {
       showToast(data.message || "Ошибка подтверждения OTP", "danger");
     }
@@ -124,7 +124,7 @@ document.getElementById("otpForm")?.addEventListener("submit", async (event) => 
   
       if (response.ok) {
         showToast("Ссылка для сброса пароля отправлена на email", "success", true);
-        window.location.href = "/login.html"; // Переход на страницу логина
+        window.location.href = "/login"; // Переход на страницу логина
       } else {
         showToast(data.message || "Ошибка", "danger");
       }
@@ -153,7 +153,7 @@ document.getElementById("otpForm")?.addEventListener("submit", async (event) => 
   
       if (response.ok) {
         showToast("Пароль успешно изменен! Войдите в систему.", "success", true);
-        window.location.href = "/login.html";
+        window.location.href = "/login";
       } else {
         showToast(data.message || "Ошибка", "danger");
       }
