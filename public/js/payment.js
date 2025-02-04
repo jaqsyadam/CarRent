@@ -41,7 +41,7 @@ document.getElementById("paymentForm")?.addEventListener("submit", async (event)
 
     if (response.ok) {
       localStorage.setItem("toastMessage", JSON.stringify({ message: "Оплата успешно завершена!", type: "success" }));
-      window.location.href = "/history.html"; // Перенаправление после успешной оплаты
+      window.location.href = "/history"; // Перенаправление после успешной оплаты
     } else {
       showToast(data.message || "Ошибка при обработке оплаты.", "danger");
     }
