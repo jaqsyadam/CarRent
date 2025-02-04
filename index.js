@@ -4,15 +4,15 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const path = require("path");
 require("./cronTasks");
+
 const app = express();
 
 // Middleware
 app.use(express.json());
 app.use(cors());
 
-// Подключение маршрутов
-const adminRoutes = require("./routes/admin.route");
-app.use("/api/admin", adminRoutes);
+// Подключение маршрутов API
+app.use("/api/admin", require("./routes/admin.route"));
 app.use("/api/auth", require("./routes/auth.route"));
 app.use("/api/cars", require("./routes/car.route"));
 app.use("/api/bookings", require("./routes/booking.route"));
@@ -25,31 +25,42 @@ app.use(express.static(path.join(__dirname, "public")));
 // Доступ к папке `uploads`
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-// Обработка маршрутов для страниц без расширения .html
-app.get("/", (req, res) => res.sendFile(path.join(__dirname, "public", "index.html")));
-app.get("/cars", (req, res) => res.sendFile(path.join(__dirname, "public", "cars.html")));
-app.get("/admin", (req, res) => res.sendFile(path.join(__dirname, "public", "admin.html")));
-app.get("/bookings", (req, res) => res.sendFile(path.join(__dirname, "public", "bookings.html")));
-app.get("/payment", (req, res) => res.sendFile(path.join(__dirname, "public", "payment.html")));
-app.get("/404", (req, res) => res.sendFile(path.join(__dirname, "public", "404.html")));
-app.get("/forgot-password", (req, res) => res.sendFile(path.join(__dirname, "public", "forgot-password.html")));
-app.get("/history", (req, res) => res.sendFile(path.join(__dirname, "public", "history.html")));
-app.get("/login", (req, res) => res.sendFile(path.join(__dirname, "public", "login.html")));
-app.get("/profile", (req, res) => res.sendFile(path.join(__dirname, "public", "profile.html")));
-app.get("/register", (req, res) => res.sendFile(path.join(__dirname, "public", "register.html")));
-app.get("/reset-password", (req, res) => res.sendFile(path.join(__dirname, "public", "reset-password.html")));
-app.get("/verify-otp", (req, res) => res.sendFile(path.join(__dirname, "public", "verify-otp.html")));
+// Маршруты для страниц без расширения .html
+const pages = [
+  "index",
+  "cars",
+  "admin",
+  "bookings",
+  "payment",
+  "404",
+  "forgot-password",
+  "history",
+  "login",
+  "profile",
+  "register",
+  "reset-password",
+  "verify-otp"
+];
 
+pages.forEach((page) => {
+  app.get(`/${page === "index" ? "" : page}`, (req, res) =>
+    res.sendFile(path.join(__dirname, "public", `${page}.html`))
+  );
+});
 
+// Обработка неизвестных маршрутов (404)
+app.use((req, res) => {
+  res.status(404).sendFile(path.join(__dirname, "public", "404.html"));
+});
 
 // Подключение к MongoDB
 mongoose
   .connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log("База данных подключена"))
-  .catch((err) => console.error("Ошибка подключения к базе данных:", err));
+  .then(() => console.log(" База данных подключена"))
+  .catch((err) => console.error(" Ошибка подключения к базе данных:", err));
 
 // Запуск сервера
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Сервер запущен на порту ${PORT}`);
+  console.log(` Сервер запущен на порту ${PORT}`);
 });
