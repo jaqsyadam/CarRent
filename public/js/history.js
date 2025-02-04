@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   if (!token) {
     localStorage.setItem("toastMessage", JSON.stringify({ message: "Пожалуйста, войдите в систему.", type: "danger" }));
-    window.location.href = "/login.html";
+    window.location.href = "/login";
     return;
   }
 
@@ -83,7 +83,7 @@ async function deleteBooking(bookingId) {
 
   if (!token) {
     showToast("Пожалуйста, войдите в систему.", "danger", true);
-    window.location.href = "/login.html";
+    window.location.href = "/login";
     return;
   }
 
@@ -192,7 +192,7 @@ document.getElementById("updateForm")?.addEventListener("submit", async (event) 
 
 // Перенаправление на страницу оплаты
 function redirectToPayment(bookingId) {
-  window.location.href = `/payment.html?bookingId=${bookingId}`;
+  window.location.href = `/payment?bookingId=${bookingId}`;
 }
 
 // Отмена бронирования
