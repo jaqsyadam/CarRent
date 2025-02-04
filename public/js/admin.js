@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("logoutBtn")?.addEventListener("click", () => {
     localStorage.removeItem("token");
     localStorage.setItem("toastMessage", JSON.stringify({ message: "Вы вышли из аккаунта", type: "success" }));
-    window.location.href = "/index.html";
+    window.location.href = "/index";
   });
 });
 
@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const token = localStorage.getItem("token");
 
   if (!token) {
-    return (window.location.href = "/404.html");
+    return (window.location.href = "/404");
   }
 
   try {
@@ -25,14 +25,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     const user = await response.json();
 
     if (user.role !== "admin") {
-      return (window.location.href = "/404.html");
+      return (window.location.href = "/404");
     }
 
     // Загрузка контента только для администратора
     loadAdminContent();
   } catch (error) {
     console.error("Ошибка проверки роли:", error);
-    window.location.href = "/404.html";
+    window.location.href = "/404";
   }
 });
 
