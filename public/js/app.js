@@ -21,6 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
   navLogout?.addEventListener("click", () => {
     localStorage.removeItem("token"); // Удаляем токен
     localStorage.setItem("toastMessage", JSON.stringify({ message: "Вы вышли из аккаунта.", type: "success" }));
-    window.location.href = "/index"; // Перенаправляем на главную страницу
+    window.location.href = "/"; // Перенаправляем на главную страницу
   });
 });
