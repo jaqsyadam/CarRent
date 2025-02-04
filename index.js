@@ -41,10 +41,6 @@ app.get("/reset-password", (req, res) => res.sendFile(path.join(__dirname, "publ
 app.get("/verify-otp", (req, res) => res.sendFile(path.join(__dirname, "public", "verify-otp.html")));
 
 
-// Маршрут для любых неизвестных путей
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
-});
 
 // Подключение к MongoDB
 mongoose
