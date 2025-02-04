@@ -106,10 +106,10 @@ function redirectToBooking(carId) {
 
   if (!token) {
     localStorage.setItem("toastMessage", JSON.stringify({ message: "Пожалуйста, войдите в систему, чтобы арендовать машину.", type: "danger" }));
-    window.location.href = "/login.html"; // Перенаправляем на страницу входа
+    window.location.href = "/login"; // Перенаправляем на страницу входа
     return;
   }
 
   // Если пользователь авторизован, перенаправляем на страницу бронирования
-  window.location.href = `/bookings.html?carId=${carId}`;
+  window.location.href = `/bookings?carId=${carId}`;
 }
