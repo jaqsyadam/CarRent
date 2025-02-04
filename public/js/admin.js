@@ -18,19 +18,30 @@ document.addEventListener("DOMContentLoaded", async () => {
       headers: { Authorization: `Bearer ${token}` },
     });
 
+    if (!response.ok) {
+      throw new Error("Ошибка проверки токена");
+    }
+
     const user = await response.json();
 
-    if (!response.ok || user.role !== "admin") {
+    if (user.role !== "admin") {
       return (window.location.href = "/404.html");
     }
 
-    // Если админ, загружаем контент
+    // Загрузка контента только для администратора
     loadAdminContent();
   } catch (error) {
     console.error("Ошибка проверки роли:", error);
     window.location.href = "/404.html";
   }
 });
+
+function loadAdminContent() {
+  const adminContent = document.getElementById("adminContent");
+  adminContent.innerHTML = `
+    <h2></h2>
+  `;
+}
 
 
 // 🔹 Загрузка пользователей
