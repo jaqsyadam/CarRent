@@ -24,12 +24,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const user = await response.json();
 
-    if (user.role !== "admin") {
+    if (user.role == "customer") {
       return (window.location.href = "/404");
+    } else {
+      // Загрузка контента только для администратора
+      loadAdminContent();
     }
 
-    // Загрузка контента только для администратора
-    loadAdminContent();
+    
   } catch (error) {
     console.error("Ошибка проверки роли:", error);
     window.location.href = "/404";
