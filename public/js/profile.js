@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   if (!token) {
     localStorage.setItem("toastMessage", JSON.stringify({ message: "Вы не авторизованы. Пожалуйста, войдите в аккаунт.", type: "danger" }));
-    window.location.href = "/login.html";
+    window.location.href = "/login";
     return;
   }
 
@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     } else {
       localStorage.removeItem("token");
       localStorage.setItem("toastMessage", JSON.stringify({ message: user.message || "Ошибка загрузки профиля", type: "danger" }));
-      window.location.href = "/login.html";
+      window.location.href = "/login";
     }
   } catch (error) {
     console.error("Ошибка загрузки профиля:", error);
@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 document.getElementById("logoutBtn")?.addEventListener("click", () => {
   localStorage.removeItem("token");
   localStorage.setItem("toastMessage", JSON.stringify({ message: "Вы вышли из аккаунта", type: "success" }));
-  window.location.href = "/index.html";
+  window.location.href = "/index";
 });
 
 // Показываем форму изменения данных
