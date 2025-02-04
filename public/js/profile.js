@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 document.getElementById("logoutBtn")?.addEventListener("click", () => {
   localStorage.removeItem("token");
   localStorage.setItem("toastMessage", JSON.stringify({ message: "Вы вышли из аккаунта", type: "success" }));
-  window.location.href = "/index";
+  window.location.href = "/";
 });
 
 // Показываем форму изменения данных
