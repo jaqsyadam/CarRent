@@ -11,6 +11,7 @@ Seamless Car Rental Process: Provide an intuitive interface for customers to sea
 Advanced Admin Management: Allow administrators to oversee bookings, manage users, and generate detailed reports for better business insights.
 Scalable Architecture: Ensure the system is optimized for performance, handling large volumes of bookings and users effectively.
 Secure Data Handling: Implement secure authentication, authorization, and data encryption for safe user interactions.
+
 ⚙️ Core Features
 🚀 For Customers:
 User Registration & Authentication: Secure sign-up, login, password recovery, and OTP verification.
@@ -18,10 +19,12 @@ Car Listings with Filters: Advanced search and filter options based on brand, en
 Booking Management: Book, view, modify, or cancel reservations with ease.
 Payment Integration: Secure payment processing with history tracking.
 Booking History: Access to past bookings and payment records.
+
 🔐 For Admins:
 Dashboard Access: Manage cars, bookings, payments, and users from a centralized dashboard.
 Advanced Data Reporting: Generate insightful reports using aggregation pipelines (revenue per user, bookings per status, etc.).
 Automated Cleanup: Scheduled tasks to clean expired bookings and failed payments.
+
 🗂️ Tech Stack
 Backend: Node.js, Express.js
 Database: MongoDB (with Mongoose ODM)
@@ -29,6 +32,7 @@ Frontend: HTML, CSS, JavaScript (vanilla JS)
 Authentication: JWT-based secure auth with OTP verification
 Task Scheduler: Node-Cron for scheduled operations
 Deployment: Render
+
 🛠️ Key Functionalities
 📊 Advanced Data Operations:
 CRUD Operations: Robust Create, Read, Update, and Delete operations for bookings, cars, and payments.
