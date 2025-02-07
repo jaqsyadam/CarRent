@@ -15,4 +15,6 @@ const carSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
+carSchema.index({ brand: 1, pricePerDay: -1 });
+
 module.exports = mongoose.model("Car", carSchema);
