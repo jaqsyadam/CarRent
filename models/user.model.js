@@ -13,4 +13,6 @@ const userSchema = new mongoose.Schema({
   otpSecret: { type: String, required: false }, 
 });
 
+userSchema.index({ email: 1, role: 1 });
+
 module.exports = mongoose.model("User", userSchema);
