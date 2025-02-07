@@ -10,14 +10,14 @@
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-      <a class="navbar-brand" href="/">Car Sharing</a>
+      <a class="navbar-brand" href="/index.html">Car Sharing</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="/cars">Автомобили</a></li>
-          <li class="nav-item"><a class="nav-link" href="/admin">Админ-панель</a></li>
+          <li class="nav-item"><a class="nav-link" href="/cars.html">Автомобили</a></li>
+          <li class="nav-item"><a class="nav-link" href="/admin.html">Админ-панель</a></li>
           <li class="nav-item"><a class="nav-link" id="logoutBtn" href="#">Выйти</a></li>
         </ul>
       </div>
@@ -40,6 +40,24 @@
         <button class="btn btn-primary w-100 mb-3" onclick="loadCars()">Управление машинами</button>
       </div>
     </div>
+
+    
+
+    <div class="row">
+      <div class="col-md-6">
+        <button class="btn btn-warning w-100" onclick="getBookingSummary()">Аналитика бронирований</button>
+      </div>
+      <div class="col-md-6">
+        <button class="btn btn-warning w-100" onclick="getPaymentSummary()">Аналитика платежей</button>
+      </div>
+    </div>
+    
+    
+    
+
+    <div id="analyticsResult" class="mb-4"></div>
+
+
 
     <div id="adminContent"></div>
   </main>
