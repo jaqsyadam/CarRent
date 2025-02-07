@@ -7,6 +7,11 @@ const upload = require("../middleware/upload.middleware");
 const authController = require("../controllers/auth.controller");
 const bookingController = require("../controllers/booking.controller");
 const carController = require("../controllers/car.controller");
+const paymentController = require("../controllers/payment.controller")
+
+router.get("/bookings/summary", verifyToken, verifyAdmin, bookingController.getBookingSummary);
+router.get("/payments/summary", verifyToken, verifyAdmin, paymentController.getPaymentSummary);
+
 
 // Управление пользователями
 router.get("/users", verifyToken, verifyAdmin, authController.getAllUsers);
@@ -15,6 +20,7 @@ router.put("/users/:id", verifyToken, verifyAdmin, authController.updateUserAttr
 
 // Управление бронированиями
 router.get("/bookings", verifyToken, verifyAdmin, bookingController.getAllBookings);
+router.delete("/bookings/delete-completed-cancelled", verifyToken, verifyAdmin, bookingController.deleteCompletedOrCancelledBookings);
 router.delete("/bookings/:id", verifyToken, verifyAdmin, bookingController.deleteBooking);
 router.put("/bookings/:id", verifyToken, verifyAdmin, bookingController.updateBookingAttribute);
 
@@ -41,5 +47,8 @@ router.put(
   upload.single("img"), // Middleware загрузки изображения
   carController.updateCarImage
 );
+
+
+
 
 module.exports = router;
