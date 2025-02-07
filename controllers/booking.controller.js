@@ -403,13 +403,15 @@ exports.updateBookingAttribute = async (req, res) => {
     const bookingId = req.params.id;
     const { field, value } = req.body;
 
-    // Разрешённые поля для обновления
+    console.log("Данные для обновления:", { bookingId, field, value });
+
     const allowedFields = ["startTime", "endTime", "status", "totalPrice"];
+
     if (!allowedFields.includes(field)) {
+      console.warn("Попытка обновить недопустимое поле:", field); // 🚩 Лог для диагностики
       return res.status(400).json({ message: "Недопустимое поле для обновления" });
     }
 
-    // Обновляем конкретный атрибут бронирования
     const updatedBooking = await Booking.findByIdAndUpdate(
       bookingId,
       { [field]: value },
@@ -417,12 +419,91 @@ exports.updateBookingAttribute = async (req, res) => {
     );
 
     if (!updatedBooking) {
+      console.warn("Бронирование не найдено:", bookingId);
       return res.status(404).json({ message: "Бронирование не найдено" });
     }
 
-    res.status(200).json({ message: `Поле ${field} успешно обновлено`, booking: updatedBooking });
+    res.status(200).json({ message: "Бронирование обновлено", updatedBooking });
   } catch (error) {
     console.error("Ошибка при обновлении бронирования:", error);
-    res.status(500).json({ message: "Ошибка сервера при обновлении бронирования" });
+    res.status(500).json({ message: "Ошибка сервера", error: error.message });
+  }
+};
+
+
+
+exports.getBookingSummary = async (req, res) => {
+  try {
+    // Аналитика для бронирований
+    const bookingStats = await Booking.aggregate([
+      {
+        $group: {
+          _id: "$status",
+          totalBookings: { $sum: 1 }
+        }
+      },
+      { $sort: { totalBookings: -1 } }
+    ]);
+
+    // Самая популярная и наименее популярная машина
+    const carDemand = await Booking.aggregate([
+      {
+        $group: {
+          _id: "$car",
+          bookingCount: { $sum: 1 }
+        }
+      },
+      { $sort: { bookingCount: -1 } }
+    ]);
+
+    const mostPopularCarData = carDemand[0];
+    const leastPopularCarData = carDemand[carDemand.length - 1];
+
+    const mostPopularCar = mostPopularCarData
+      ? await Car.findById(mostPopularCarData._id).select("brand model")
+      : null;
+
+    const leastPopularCar = leastPopularCarData
+      ? await Car.findById(leastPopularCarData._id).select("brand model")
+      : null;
+
+    res.status(200).json({
+      bookingStats,
+      mostPopularCar: mostPopularCar
+        ? {
+            name: `${mostPopularCar.brand} ${mostPopularCar.model}`,
+            bookings: mostPopularCarData.bookingCount
+          }
+        : { name: "Нет данных", bookings: 0 },
+
+      leastPopularCar: leastPopularCar
+        ? {
+            name: `${leastPopularCar.brand} ${leastPopularCar.model}`,
+            bookings: leastPopularCarData.bookingCount
+          }
+        : { name: "Нет данных", bookings: 0 },
+    });
+  } catch (err) {
+    console.error("Ошибка при получении аналитики бронирований:", err);
+    res.status(500).json({ message: "Ошибка сервера", error: err.message });
+  }
+};
+
+
+
+
+exports.deleteCompletedOrCancelledBookings = async (req, res) => {
+  try {
+    const result = await Booking.deleteMany({
+      status: { $in: ["completed", "cancelled"] }
+    });
+
+    res.status(200).json({
+      message: "Все завершенные и отмененные бронирования успешно удалены.",
+      deletedCount: result.deletedCount
+    });
+  } catch (error) {
+    console.error("Ошибка при массовом удалении бронирований:", error);
+    res.status(500).json({ message: "Ошибка сервера.", error: error.message });
   }
 };
