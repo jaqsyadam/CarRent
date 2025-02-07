@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("logoutBtn")?.addEventListener("click", () => {
     localStorage.removeItem("token");
     localStorage.setItem("toastMessage", JSON.stringify({ message: "Вы вышли из аккаунта", type: "success" }));
-    window.location.href = "/";
+    window.location.href = "/index.html";
   });
 });
 
@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const token = localStorage.getItem("token");
 
   if (!token) {
-    return (window.location.href = "/404");
+    return (window.location.href = "/404.html");
   }
 
   try {
@@ -24,17 +24,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const user = await response.json();
 
-    if (user.role == "customer") {
-      return (window.location.href = "/404");
-    } else {
-      // Загрузка контента только для администратора
-      loadAdminContent();
+    if (user.role !== "admin") {
+      return (window.location.href = "/404.html");
     }
 
-    
+    // Загрузка контента только для администратора
+    loadAdminContent();
   } catch (error) {
     console.error("Ошибка проверки роли:", error);
-    window.location.href = "/404";
+    window.location.href = "/404.html";
   }
 });
 
@@ -176,6 +174,9 @@ async function loadBookings() {
 
     adminContent.innerHTML = `
       <h2>Бронирования</h2>
+      <div class="d-flex gap-3 mb-3">
+        <button class="btn btn-danger col-12" onclick="deleteCompletedOrCancelledBookings()">Удалить завершенные/отмененные бронирования</button>
+      </div>
       <ul class="list-group">
         ${bookings.map(booking => `
           <li class="list-group-item">
@@ -207,7 +208,7 @@ function createEditableField(bookingId, field, value) {
 
 // 🔹 Включение режима редактирования (скрывает "Изменить", показывает "Сохранить")
 function toggleEdit(bookingId, field) {
-  const input = document.getElementById(`input-${field}-${bookingId}`);
+  const input = document.getElementById(`input-${field}-${bookingId}`);ы
   const editBtn = document.getElementById(`edit-${field}-${bookingId}`);
   const saveBtn = document.getElementById(`save-${field}-${bookingId}`);
 
@@ -496,3 +497,120 @@ async function deleteCar(carId) {
     showToast("Ошибка удаления", "danger");
   }
 }
+
+async function getBookingSummary() {
+  const analyticsContainer = document.getElementById("analyticsResult");
+
+  if (analyticsContainer.innerHTML.trim() !== "") {
+    analyticsContainer.innerHTML = ""; 
+    return;
+  }
+
+  try {
+    const response = await fetch("/api/admin/bookings/summary", {
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      displayAnalytics(data, "Аналитика бронирований");
+    } else {
+      showToast(data.message || "Ошибка загрузки аналитики", "danger");
+    }
+  } catch (error) {
+    console.error("Ошибка при получении аналитики бронирований:", error);
+    showToast("Ошибка при получении аналитики бронирований", "danger");
+  }
+}
+
+async function getPaymentSummary() {
+  const analyticsContainer = document.getElementById("analyticsResult");
+
+  if (analyticsContainer.innerHTML.trim() !== "") {
+    analyticsContainer.innerHTML = ""; // 
+    return;
+  }
+
+  try {
+    const response = await fetch("/api/admin/payments/summary", {
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      displayAnalytics(data, "Аналитика платежей");
+    } else {
+      showToast(data.message || "Ошибка загрузки аналитики", "danger");
+    }
+  } catch (error) {
+    console.error("Ошибка при получении аналитики платежей:", error);
+    showToast("Ошибка при получении аналитики платежей", "danger");
+  }
+}
+
+
+function displayAnalytics(data, title) {
+  const analyticsContainer = document.getElementById("analyticsResult");
+
+  if (analyticsContainer.innerHTML.trim() !== "") {
+    analyticsContainer.innerHTML = "";  
+    return;
+  }
+
+  let content = `<h3>${title}</h3><ul class="list-group">`;
+
+  if (data.bookingStats) {
+    content += data.bookingStats.map(stat => `
+      <li class="list-group-item d-flex justify-content-between">
+        <span><strong>Статус:</strong> ${stat._id}</span>
+        <span><strong>Количество:</strong> ${stat.totalBookings}</span>
+      </li>
+    `).join("");
+
+    content += `
+      <li class="list-group-item">
+        <strong>Самая популярная машина:</strong> ${data.mostPopularCar.name} 
+        <br><strong>Количество бронирований:</strong> ${data.mostPopularCar.bookings}
+      </li>
+      <li class="list-group-item">
+        <strong>Наименее популярная машина:</strong> ${data.leastPopularCar.name} 
+        <br><strong>Количество бронирований:</strong> ${data.leastPopularCar.bookings}
+      </li>
+    `;
+  }
+
+  if (data.mostUsedMethod || data.recentRevenue !== undefined) {
+    content += `
+      <li class="list-group-item"><strong>Самый популярный метод оплаты:</strong> ${data.mostUsedMethod}</li>
+      <li class="list-group-item"><strong>Прибыль за последние 30 дней:</strong> ${data.recentRevenue}</li>
+      <li class="list-group-item"><strong>Изменение прибыли:</strong> ${data.growthRate}%</li>
+    `;
+  }
+
+  content += `</ul>`;
+  analyticsContainer.innerHTML = content;
+}
+
+
+
+async function deleteCompletedOrCancelledBookings() {
+  if (!confirm("Вы уверены, что хотите удалить все завершенные и отмененные бронирования?")) return;
+
+  try {
+    const response = await fetch("/api/admin/bookings/delete-completed-cancelled", {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    });
+    const result = await response.json();
+
+    if (response.ok) {
+      showToast(`Удалено ${result.deletedCount} бронирований`, "success", true);
+      loadBookings();
+    } else {
+      showToast(result.message || "Ошибка удаления бронирований", "danger");
+    }
+  } catch (error) {
+    showToast("Ошибка при удалении бронирований", "danger");
+  }
+}
+
