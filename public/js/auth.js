@@ -49,31 +49,30 @@ document.getElementById("registerForm")?.addEventListener("submit", async (event
 });
 
 // 🔹 Авторизация
-document.getElementById("loginForm")?.addEventListener("submit", async (event) => {
-  event.preventDefault();
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value.trim();
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
   try {
-    const response = await fetch("/api/auth/login", {
+    const res = await fetch("https://your-backend.onrender.com/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email, password })
     });
 
-    const data = await response.json();
+    const data = await res.json();
 
-    if (response.ok) {
-      localStorage.setItem("emailForOTP", email);
-      showToast("Код OTP отправлен. Введите его для входа.", "success", true);
-      window.location.href = "/verify-otp"; // Переход на страницу ввода OTP
-    } else {
-      showToast(data.message || "Ошибка авторизации", "danger");
+    if (!res.ok) {
+      alert(data.message);
+      return;
     }
+    window.location.href = `/verify-otp.html?email=${email}`;
+
   } catch (error) {
     console.error("Ошибка:", error);
-    showToast("Ошибка сервера", "danger");
+    alert("Ошибка сервера");
   }
 });
 
@@ -163,3 +162,4 @@ document.getElementById("otpForm")?.addEventListener("submit", async (event) => 
     }
   });
   
+
